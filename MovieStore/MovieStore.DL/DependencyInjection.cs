@@ -1,5 +1,4 @@
-﻿using MovieStore.BL.Interfaces;
-using MovieStore.BL.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MovieStore.DL.Interfaces;
 using MovieStore.DL.Repositories;
 

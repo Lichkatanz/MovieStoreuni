@@ -1,3 +1,6 @@
+using MovieStore.BL.Interfaces;
+using MovieStore.BL.Services;
+
 namespace MovieStore
 {
     public class Program
@@ -7,6 +10,8 @@ namespace MovieStore
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services
+                .AddSingleton<IMovieService, MovieService>();
 
             builder.Services.AddControllers();
 

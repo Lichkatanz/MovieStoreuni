@@ -34,7 +34,6 @@ namespace MovieStore
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();

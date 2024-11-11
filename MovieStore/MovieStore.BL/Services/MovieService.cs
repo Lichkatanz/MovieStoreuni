@@ -8,17 +8,19 @@ namespace MovieStore.BL.Services
     {
         private readonly IMovieRepository _movieRepository;
 
-        public Guid Id { get; set; }
-
         public MovieService(IMovieRepository movieRepository)
         {
             _movieRepository = movieRepository;
-            Id = Guid.NewGuid();
         }
         
         public List<Movie> GetAllMovies()
         {
             return _movieRepository.GetAllMovies();
+        }
+
+        public void AddMovie(Movie movie)
+        {
+            _movieRepository.AddMovie(movie);
         }
     }
 }

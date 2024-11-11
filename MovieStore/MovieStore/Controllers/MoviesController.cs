@@ -22,10 +22,11 @@ namespace MovieStore.Controllers
             return _movieService.GetAllMovies();
         }
 
-        [HttpGet("GetGuid")]
-        public string GetGuid()
+        [HttpPost("Add")]
+        public void Add(Movie movie)
         {
-            return _movieService.Id.ToString();
+            _movieService.AddMovie(movie);
         }
+
     }
 }

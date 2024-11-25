@@ -16,6 +16,11 @@ namespace MovieStore.DL.Repositories
             InMemoryDb.Movies.Add(movie);
         }
 
+        /// <summary>
+        /// Get movie by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Movie? GetMovieById(int id)
         {
            return InMemoryDb.Movies

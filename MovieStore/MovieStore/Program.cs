@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Mapster;
 using MovieStore.BL;
 using MovieStore.MapsterConfig;
+using MovieStore.ServiceExtensions;
 using MovieStore.Validators;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -25,6 +26,7 @@ namespace MovieStore
 
             // Add services to the container.
             builder.Services
+                .AddConfigurations(builder.Configuration)
                 .RegisterDataLayer()
                 .RegisterBusinessLayer();
 

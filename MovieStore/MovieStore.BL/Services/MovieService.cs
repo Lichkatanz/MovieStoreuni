@@ -23,7 +23,7 @@ namespace MovieStore.BL.Services
             _movieRepository.AddMovie(movie);
         }
 
-        public Movie? GetById(int id)
+        public Movie? GetById(string id)
         {
             return _movieRepository.GetMovieById(id);
         }

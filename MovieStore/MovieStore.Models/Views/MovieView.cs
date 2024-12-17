@@ -4,7 +4,7 @@ namespace MovieStore.Models.Views
 {
     public class MovieView
     {
-        public int MovieId { get; set; }
+        public string MovieId { get; set; }
 
         public string MovieTitle { get; set; } = string.Empty;
 

@@ -7,14 +7,14 @@ using MovieStore.Models.DTO;
 
 namespace MovieStore.DL.Repositories.MongoRepositories
 {
-    public class MovieRepository : IMovieRepository
+    public class ActorRepository : IActorRepository
     {
-        private readonly IMongoCollection<Movie> _movies;
-        private readonly ILogger<MovieRepository> _logger;
+        private readonly IMongoCollection<Actor> _actors;
+        private readonly ILogger<ActorRepository> _logger;
 
-        public MovieRepository(
+        public ActorRepository(
             IOptionsMonitor<MongoDbConfiguration> mongoConfig,
-            ILogger<MovieRepository> logger)
+            ILogger<ActorRepository> logger)
         {
             _logger = logger;
             var client = new MongoClient(
@@ -23,16 +23,17 @@ namespace MovieStore.DL.Repositories.MongoRepositories
             var database = client.GetDatabase(
                 mongoConfig.CurrentValue.DatabaseName);
 
-            _movies = database.GetCollection<Movie>(
-                $"{nameof(Movie)}s");
+            _actors = database.GetCollection<Actor>(
+                $"{nameof(Actor)}s");
         }
 
-        public List<Movie> GetAllMovies()
+        public void AddActor(Actor actor)
         {
-           return _movies.Find(movie => true).ToList();
+            actor.Id = System.Guid.NewGuid().ToString();
+            _actors.InsertOne(actor);
         }
 
-        public void AddMovie(Movie movie)
+        public void AddMovie(Actor movie)
         {
             if (movie == null)
             {
@@ -44,7 +45,7 @@ namespace MovieStore.DL.Repositories.MongoRepositories
             {
                 movie.Id = Guid.NewGuid().ToString();
 
-                _movies.InsertOne(movie);
+                _actors.InsertOne(movie);
             }
             catch (Exception e)
             {
@@ -54,11 +55,18 @@ namespace MovieStore.DL.Repositories.MongoRepositories
            
         }
 
-        public Movie? GetMovieById(string id)
-        {
-            if(string.IsNullOrEmpty(id)) return null;
 
-            return _movies.Find(m => m.Id == id)
+        public IEnumerable<Actor> GetActorsByIds(IEnumerable<string> actorsIds)
+        {
+            var result = _actors.Find(actor => actorsIds.Contains(actor.Id)).ToList();
+            return result;
+        }
+
+        public Actor? GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+
+            return _actors.Find(m => m.Id == id)
                 .FirstOrDefault();
         }
     }

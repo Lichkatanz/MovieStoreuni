@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Mapster;
 using MovieStore.BL;
+using MovieStore.HealthChecks;
 using MovieStore.MapsterConfig;
 using MovieStore.ServiceExtensions;
 using MovieStore.Validators;
@@ -42,6 +43,10 @@ namespace MovieStore
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //builder.Services.AddHealthChecks();
+
+            builder.Services.AddHealthChecks()
+                .AddCheck<SampleHealthCheck>("Sample");
 
             var app = builder.Build();
 
@@ -52,6 +57,8 @@ namespace MovieStore
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.MapHealthChecks("/Sample");
 
             app.UseHttpsRedirection();
 

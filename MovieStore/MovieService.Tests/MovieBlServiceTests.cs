@@ -63,20 +63,15 @@ namespace MovieService.Tests
         public void GetDetailedMovies_Ok()
         {
             //setup
-            List<string> actorIds =
-            [
-                _actors[0].Id,
-                _actors[1].Id,
-                _actors[2].Id,
-                _actors[3].Id
-            ];
             var expectedCount = 2;
 
             _movieServiceMock
                 .Setup(x => x.GetAllMovies())
                 .Returns(_movies);
-            _actorRepositoryMock
-                .Setup(x => x.GetActorsByIds(actorIds));
+            _actorRepositoryMock.Setup(x => 
+                    x.GetById(It.IsAny<string>()))
+                .Returns((string id) =>
+                    _actors.FirstOrDefault(x => x.Id == id));
 
             //inject
             var movieBlService = new MovieBlService(
